@@ -12,9 +12,11 @@ This phase does not need full AI autonomy or the Textual TUI. It establishes the
 
 - Python package scaffold using `uv` and `pyproject.toml`.
 - `bughunter` CLI entrypoint using Typer.
+- Interactive prompt/REPL mode (like `codex` or `agy`) to chat about the project and execute slash commands (e.g. `/scan`).
+- Local Vector DB (ChromaDB) integration specifically powering the interactive REPL RAG features.
 - Basic Rich-based streaming TUI (Textual upgrade deferred to Phase 3).
 - `bughunter-scope.yml` parser and validator.
-- Provider config model for OpenAI and Gemini.
+- Provider config model for OpenAI, Gemini, and Groq/Grok (free-tier options).
 - SQLite database with full schema (all tables pre-created).
 - Event bus (asyncio-based, used by TUI and all agents).
 - `Finding`, `Evidence`, `Report`, `PolicyDecision`, `PolicyViolation` schemas.
@@ -30,11 +32,11 @@ This phase does not need full AI autonomy or the Textual TUI. It establishes the
 ## Commands To Support
 
 ```bash
-bughunter
-bughunter config
-bughunter scan --scope bughunter-scope.yml
-bughunter report --run <run_id>
-bughunter runs
+bughunter                                  # Starts interactive REPL
+bughunter config                           # Configure providers
+bughunter scan --scope bughunter-scope.yml # Run a scan directly
+bughunter report --run <run_id>            # Generate a report
+bughunter runs                             # List past runs
 ```
 
 ---
@@ -308,23 +310,24 @@ A simple Rich-based streaming display. Upgraded to full Textual in Phase 3.
 
 ## Todo List
 
-- [ ] Create `pyproject.toml` with `uv` and CLI entrypoint.
-- [ ] Add package structure under `bughunter/`.
-- [ ] Implement Typer CLI with all Phase 1 commands.
-- [ ] Implement scope file loader, validator, and Pydantic model.
-- [ ] Implement provider config model (OpenAI and Gemini).
-- [ ] Create SQLite schema with all tables.
-- [ ] Implement `RunStore` with run creation and lookup.
-- [ ] Implement async event bus.
-- [ ] Implement `Finding`, `Evidence`, `PolicyDecision` Pydantic schemas.
-- [ ] Implement `SafetyPolicyEngine` with scope validation and blocking.
-- [ ] Implement `SecretRedactor`.
-- [ ] Implement Semgrep runner (Phase 1 rule subset).
-- [ ] Implement minimal deterministic checks (secrets, debug, headers).
-- [ ] Implement minimal Markdown report renderer.
-- [ ] Implement Rich-based streaming TUI.
-- [ ] Add tests: scope validation, safety policy blocking, Semgrep runner, secret redaction, report rendering.
-- [ ] Add README quickstart section.
+- [x] Create `pyproject.toml` with `uv` and CLI entrypoint.
+- [x] Add package structure under `bughunter/`.
+- [x] Implement Typer CLI with all Phase 1 commands.
+- [x] Implement interactive REPL loop with slash commands.
+- [x] Implement scope file loader, validator, and Pydantic model.
+- [x] Implement provider config model (OpenAI, Gemini, Groq/Grok).
+- [x] Create SQLite schema with all tables.
+- [x] Implement `RunStore` with run creation and lookup.
+- [x] Implement async event bus.
+- [x] Implement `Finding`, `Evidence`, `PolicyDecision` Pydantic schemas.
+- [x] Implement `SafetyPolicyEngine` with scope validation and blocking.
+- [x] Implement `SecretRedactor`.
+- [x] Implement Semgrep runner (Phase 1 rule subset).
+- [x] Implement minimal deterministic checks (secrets, debug, headers).
+- [x] Implement minimal Markdown report renderer.
+- [x] Implement Rich-based streaming TUI.
+- [x] Add tests: scope validation, safety policy blocking, Semgrep runner, secret redaction, report rendering.
+- [x] Add README quickstart section.
 
 ---
 
