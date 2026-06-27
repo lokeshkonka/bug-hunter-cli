@@ -25,6 +25,7 @@ Connect all components into a complete autonomous workflow using LangGraph. Phas
 - `RetestAgent` with retest workflow, evidence comparison, and status lifecycle.
 - OpenAI provider adapter.
 - Gemini provider adapter.
+- Groq / Grok provider adapter (for free tier access).
 - Score breakdown modal in Textual TUI.
 - Token and cost tracking (full `provider_usage` table populated).
 - End-to-end tests against both fixture apps.
@@ -270,6 +271,14 @@ class OpenAIAdapter(ProviderAdapter):
 - Same timeout and retry policy.
 - Same guard chain.
 
+### Groq / Grok Adapter
+
+- Models: `llama3-70b-8192` or `mixtral-8x7x-32768` (Groq), or `grok-1` (xAI).
+- Enables extremely fast inference and free-tier access for users without paid OpenAI/Gemini accounts.
+- Structured output via JSON mode.
+- Same timeout and retry policy.
+- Same guard chain.
+
 ### Shared Rules
 
 - API keys from environment variables: `OPENAI_API_KEY`, `GOOGLE_API_KEY`.
@@ -321,6 +330,7 @@ Phase 4 requires end-to-end tests against both fixture apps.
 - [ ] Implement `ReportAgent` LangGraph node (full bug-report.md).
 - [ ] Implement OpenAI provider adapter.
 - [ ] Implement Gemini provider adapter.
+- [ ] Implement Groq / Grok provider adapter.
 - [ ] Implement model timeout and retry policy.
 - [ ] Implement full `provider_usage` tracking.
 - [ ] Implement `RetestAgent` LangGraph subgraph.
@@ -338,7 +348,7 @@ Phase 4 requires end-to-end tests against both fixture apps.
 Phase 4 is complete when:
 
 - `bughunter` can run an interactive end-to-end scan with the full LangGraph graph.
-- OpenAI and Gemini can be selected and switched via `bughunter config`.
+- OpenAI, Gemini, and Groq/Grok can be selected and switched via `bughunter config`.
 - Every finding has a VulnScore, risk tier, and score breakdown.
 - `VulnScoringAgent` detects and flags score inflation.
 - `FixAgent` provides language-specific remediation for every confirmed finding.
