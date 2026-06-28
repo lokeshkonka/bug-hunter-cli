@@ -40,7 +40,15 @@ def start_interactive_session():
     console.print()
     console.print(Align.right(f"[italic yellow]Active Model: {active_model}[/italic yellow]"))
     console.print()
-    console.print("Hey ! Bug Hunter CLI [green]/commands[/green] to get all info !\n")
+    
+    welcome_text = """
+    [bold cyan]Welcome to the Bug Hunter CLI![/bold cyan]
+    To start a scan, simply type [green]/scan bughunter-scope.yml[/green].
+    The scope file controls what URLs are scanned and limits destructive behavior.
+    All findings are saved locally in the [yellow].bughunter/[/yellow] database directory.
+    Type [green]/commands[/green] or [green]/help[/green] at any time for more info.
+    """
+    console.print(welcome_text)
     # Initialize VectorStore
     try:
         from bughunter.storage.vector_store import VectorStore
@@ -51,8 +59,8 @@ def start_interactive_session():
 
     from bughunter.config_manager import ConfigManager
     if not ConfigManager.get_active_profile():
-        console.print("\\n[bold yellow]No API key configured![/bold yellow]")
-        console.print("Let's set up your first API key profile.\\n")
+        console.print("\n[bold yellow]No API key configured![/bold yellow]")
+        console.print("Let's set up your first API key profile.\n")
         import os
         os.system("bughunter config")
         # Re-check after setup
@@ -84,7 +92,7 @@ def start_interactive_session():
         return
         
     os.chdir(target_folder)
-    console.print(f"[green]Working directory set to {target_folder}[/green]\\n")
+    console.print(f"[green]Working directory set to {target_folder}[/green]\n")
 
     while True:
         try:
@@ -326,7 +334,7 @@ AVAILABLE COMMANDS:
 """
 
         messages = [
-            SystemMessage(content=f"You are the Bug Hunter CLI expert assistant. You have full access to the project context, recent security scan reports, and CLI commands.\\n\\n{commands_info}\\n\\nYour job is to explain how to use the tool, describe recent scans in detail, answer 'what', 'how', and 'why' questions, and guide the user through their security vulnerabilities one by one if asked.\\nIf the user asks you to create a scope file, USE the create_scope_file tool directly to create it for them!\\n\\nCONTEXT:\\n{context}{report_context}"),
+            SystemMessage(content=f"You are the Bug Hunter CLI expert assistant. You have full access to the project context, recent security scan reports, and CLI commands.\\n\\n{commands_info}\\n\\nYour job is to explain how to use the tool, describe recent scans in detail, answer 'what', 'how', and 'why' questions, and guide the user through their security vulnerabilities one by one if asked.\\nIf the user asks you to create a scope file, USE the create_scope_file tool directly to create it for them!\\n\\nNOTE: The 'Retrieved Codebase Context' below is fetched via Vector Search based on the user's prompt. It may be entirely irrelevant (e.g., if the user just says 'hey'). If it is irrelevant to the user's message, IGNORE IT COMPLETELY and just chat normally.\\n\\nCONTEXT:\\n{context}{report_context}"),
             HumanMessage(content=question)
         ]
         
