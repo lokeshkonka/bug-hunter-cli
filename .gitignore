@@ -50,7 +50,7 @@ coverage.xml
 .bughunter/
 bughunter-scope.yml
 test-scope.yml
-test*.py
+test_db*.py
 dummy_config.py
 uv.lock
 *.db
