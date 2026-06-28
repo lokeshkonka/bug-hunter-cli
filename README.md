@@ -7,6 +7,8 @@
     <img src="https://img.shields.io/badge/Architecture-Hexagonal-brightgreen?style=flat-square" alt="Hexagonal">
     <img src="https://img.shields.io/badge/AI_Powered-LangGraph-purple?style=flat-square" alt="LangGraph">
   </p>
+  <br>
+  <img src="./Docs/Screenshots/Title.png" alt="Bug Hunter CLI Title" width="800">
 </div>
 
 ---
@@ -73,7 +75,7 @@ Bug Hunter CLI is published on PyPI. You do not need to clone the repository to 
 
 ```bash
 # Install globally via pip
-pip install bug-hunter-cli
+pip install bug-hunter-cli==0.1.1
 ```
 
 ### Starting a Scan
@@ -94,6 +96,11 @@ Then, run the scanner:
 ```bash
 bughunter scan --scope bughunter-scope.yml
 ```
+
+<div align="center">
+  <img src="./Docs/Screenshots/scan.png" alt="Scan in Progress" width="800">
+</div>
+
 You will receive a beautifully formatted **Markdown Report** in the `.bughunter/reports` folder, and a live, interactive TUI terminal output!
 
 ---
