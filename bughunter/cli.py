@@ -25,7 +25,33 @@ from bughunter.reports.markdown import MarkdownExporter
 from bughunter.models.finding import Finding, Severity, Confidence
 import aiosqlite
 
-app = typer.Typer(name="bughunter", help="Bug Hunter CLI — Agentic Vulnerability Scanner")
+CLI_HELP = """
+Bug Hunter CLI — Agentic Vulnerability Scanner
+
+Bug Hunter is an autonomous application security engineer powered by LangGraph.
+It performs SAST and DAST analysis by reading your codebase, searching for bugs,
+and executing dynamic HTTP payloads to prove vulnerability exploitability.
+
+GETTING STARTED:
+  1. Run `bughunter` with no arguments to enter interactive mode.
+  2. In interactive mode, type `/scan bughunter-scope.yml` to start scanning.
+  
+THE SCOPE FILE (bughunter-scope.yml):
+  This YAML file dictates the scan parameters and URLs. It controls the SCAN MODE:
+    * passive: Completely offline code analysis. No network requests are made.
+    * safe-active: The agent will send benign, non-destructive validation payloads.
+    * lab-validation: Aggressive mode. The agent is authorized to send destructive 
+      exploit payloads (SQLi drops, XSS alerts) to validate vulnerabilities.
+
+LOCAL DATABASES:
+  Bug Hunter stores its state locally so your code never leaves your machine 
+  (except for the snippets sent to your configured LLM API):
+    * .bughunter/runs/bughunter.db (SQLite database tracking all findings and costs)
+    * .bughunter/vector_store/ (ChromaDB vector embeddings for code retrieval)
+    * .bughunter/reports/ (Final generated Markdown and SARIF reports)
+"""
+
+app = typer.Typer(name="bughunter", help=CLI_HELP, rich_markup_mode="markdown")
 
 DB_PATH = Path(".bughunter/bughunter.db")
 
