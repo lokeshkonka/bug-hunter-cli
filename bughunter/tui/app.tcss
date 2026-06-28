@@ -1,0 +1,82 @@
+BugHunterHeader {
+    dock: top;
+    height: 3;
+    content-align: center middle;
+    background: $primary;
+    color: $text;
+    text-style: bold;
+    border-bottom: solid $primary-darken-2;
+}
+
+BugHunterFooter {
+    dock: bottom;
+    height: 1;
+    background: $panel;
+    color: $text-muted;
+}
+
+#left_panel {
+    width: 30%;
+    height: 100%;
+    border-right: panel $border;
+    background: $panel;
+}
+
+#main_panel {
+    width: 50%;
+    height: 100%;
+    background: $boost;
+}
+
+#right_panel {
+    width: 20%;
+    height: 100%;
+    border-left: panel $border;
+    background: $panel;
+}
+
+FindingsStreamWidget {
+    height: 100%;
+    overflow-y: auto;
+    padding: 1;
+}
+
+RichLog {
+    height: 1fr;
+    background: $surface;
+    border: round $primary;
+    margin: 1;
+    padding: 0 1;
+}
+
+FindingCard {
+    border: round $border;
+    background: $surface;
+    margin-bottom: 1;
+    padding: 1;
+}
+
+.finding-critical { border: double red; background: rgba(255, 0, 0, 0.1); }
+.finding-high { border: round orange; background: rgba(255, 165, 0, 0.1); }
+.finding-medium { border: round yellow; }
+.finding-low { border: round blue; }
+.finding-info { border: round gray; }
+
+.panel_title {
+    text-align: center;
+    text-style: bold;
+    width: 100%;
+    color: $accent;
+    background: $surface;
+    padding: 1;
+}
+
+ScoreSummaryWidget {
+    padding: 1;
+}
+
+PhaseTrackerWidget {
+    height: auto;
+    border-bottom: hkey $border;
+    padding-bottom: 1;
+}

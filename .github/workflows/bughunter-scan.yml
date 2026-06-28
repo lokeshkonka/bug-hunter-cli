@@ -1,0 +1,41 @@
+name: Bug Hunter CLI Security Scan
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Install Bug Hunter CLI
+        run: uv tool install bughunter
+
+      - name: Run security scan
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          bughunter scan \
+            --scope bughunter-scope.yml \
+            --auto-approve \
+            --ci \
+            --json-events > bughunter-events.json
+
+      - name: Get run ID
+        id: run_id
+        run: echo "RUN_ID=$(cat .bughunter/last-run-id)" >> $GITHUB_ENV || echo "RUN_ID=fake_id" >> $GITHUB_ENV
+
+      - name: Export SARIF
+        if: always()
+        run: bughunter export --run ${{ env.RUN_ID }} --format sarif
+
+      - name: Upload SARIF to GitHub Code Scanning
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: .bughunter/reports/bug-report-${{ env.RUN_ID }}.sarif
